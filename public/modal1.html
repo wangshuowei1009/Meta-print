@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Upload 3D Model and Create NFT</title>
+    <!-- 可根据需要添加额外 CSS -->
+</head>
+
+
+<body>
+    <h2>Upload 3D Model and Create NFT</h2>
+
+    <label for="nftName">NFT Name:</label>
+    <input type="text" id="nftName" placeholder="Enter NFT name">
+    <br>
+
+    <label for="nftDescription">NFT Description:</label>
+    <input type="text" id="nftDescription" placeholder="Enter NFT description">
+    <br>
+
+    <label for="externalUrl">External URL (optional):</label>
+    <input type="text" id="externalUrl" placeholder="Enter external URL">
+    <br>
+
+    <label> Dimensions (optional, in cm):</label>
+    <br>
+    <label for="dimensionWidth">Width:</label>
+    <input type="number" id="dimensionWidth" placeholder="Enter width">
+    <br>
+    <label for="dimensionHeight">Height:</label>
+    <input type="number" id="dimensionHeight" placeholder="Enter height">
+    <br>
+    <label for="dimensionDepth">Depth:</label>
+    <input type="number" id="dimensionDepth" placeholder="Enter depth">
+    <br>
+
+    <label for="recommendedMaterial">Recommended Material (optional):</label>
+    <input type="text" id="recommendedMaterial" placeholder="Enter recommended material">
+    <br>
+
+    <label for="recommendedLayerHeight">Recommended Layer Height (optional):</label>
+    <input type="text" id="recommendedLayerHeight" placeholder="Enter recommended layer height">
+    <br>
+
+    <label for="sellerFee">Seller Fee Basis Points:</label>
+    <input type="number" id="sellerFee" placeholder="Enter fee basis points">
+    <br>
+
+    <h3>Upload 3D Model Files</h3>
+
+    <label for="previewImageInput">Upload Preview Image:</label>
+    <input type="file" id="previewImageInput" accept="image/*">
+    <br>
+
+    <label for="animationInput">Upload Animation File (optional):</label>
+    <input type="file" id="animationInput" accept=".glb,.gltf">
+    <br>
+
+    <label for="stlInput">Upload STL File:</label>
+    <input type="file" id="stlInput" accept=".stl">
+    <br>
+    <label for="stlDescription">STL Description (optional):</label>
+    <input type="text" id="stlDescription" placeholder="Enter STL file description">
+    <br>
+
+    <label for="objInput">Upload OBJ File:</label>
+    <input type="file" id="objInput" accept=".obj">
+    <br>
+    <label for="objDescription">OBJ Description (optional):</label>
+    <input type="text" id="objDescription" placeholder="Enter OBJ file description">
+    <br>
+
+    <label for="3mfInput">Upload 3MF File:</label>
+    <input type="file" id="3mfInput" accept=".3mf">
+    <br>
+    <label for="threeMfDescription">3MF Description (optional):</label>
+    <input type="text" id="threeMfDescription" placeholder="Enter 3MF file description">
+    <br>
+
+    <button id="estimateButton">Estimate Upload Cost</button>
+    <button id="uploadAndCreateNftButton">Upload Files and Create NFT</button>
+
+    <!-- 加载原有的JS文件，不会破坏原先的逻辑 -->
+    <script src="dist/bundle2.js"></script>
+</body>
+
+</html>

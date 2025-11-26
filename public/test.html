@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Wallet 连接成功弹窗</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f2f5;
+        }
+
+        /* 模态框遮罩层 */
+        .modal {
+            display: none;
+            /* 默认隐藏 */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        /* 弹窗主体 */
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: modalFadeIn 0.3s forwards;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        /* 关闭按钮 */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        /* Logo 容器 */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
+            height: auto;
+            opacity: 0;
+            animation: fadeInLogo 0.3s forwards;
+            vertical-align: middle;
+        }
+
+        .company-logo {
+            animation-delay: 0.1s;
+            width: 150px;
+            margin-left: -20px;
+        }
+
+        .phantom-logo {
+            animation-delay: 0.1s;
+            width: 120px;
+        }
+
+        @keyframes fadeInLogo {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 连接线 */
+        .connector {
+            width: 0;
+            height: 4px;
+            background-color: #28a745;
+            margin: 0 10px;
+            align-self: center;
+            border-radius: 2px;
+            animation: drawLine 0.5s forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes drawLine {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100px;
+            }
+        }
+
+        /* 成功提示文字 */
+        .success-text {
+            font-size: 20px;
+            color: #333;
+            opacity: 0;
+            animation: fadeInText 0.3s forwards;
+            animation-delay: 0.9s;
+            text-align: center;
+            margin-left: 10px;
+        }
+
+        @keyframes fadeInText {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Wallet 按钮，点击后尝试连接钱包 -->
+    <button id="wallet">Connect Wallet</button>
+
+    <!-- 弹窗 -->
+    <div id="walletModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="logo-container">
+                <!-- 请替换为您公司的实际Logo地址 -->
+                <img src="../public/1.svg" alt="公司Logo" class="company-logo">
+                <div class="connector"></div>
+                <!-- 请替换为 Phantom 钱包的实际Logo地址 -->
+                <img src="../public/Phantom-Logo-Purple.svg" alt="Phantom钱包Logo" class="phantom-logo">
+            </div>
+            <!-- 弹窗提示文本，后续会动态更新为包含钱包地址的提示信息 -->
+            <p class="success-text">Wallet connected successfully</p>
+        </div>
+    </div>
+
+    <script>
+        // 定义自定义弹窗函数
+        function showCustomModal(message) {
+            const successText = document.querySelector('.success-text');
+            successText.textContent = message;
+            modal.style.display = 'block';
+        }
+
+        // 弹窗相关逻辑
+        const modal = document.getElementById('walletModal');
+        const closeBtn = document.querySelector('.close');
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // 连接 Phantom 钱包的函数
+        async function connectPhantomWallet() {
+            try {
+                // 检查是否安装 Phantom wallet（Phantom 会在 window.solana 中注入）
+                if (!window.solana || !window.solana.isPhantom) {
+                    alert('Phantom wallet is not installed. Please install it from https://phantom.app/');
+                    return;
+                }
+                // 连接钱包
+                const resp = await window.solana.connect();
+                console.log('Connected to Phantom wallet:', resp.publicKey.toString());
+                // 用自定义弹窗显示连接成功信息，并保留钱包公钥
+                showCustomModal(`Connected to wallet: ${resp.publicKey.toString()}`);
+            } catch (error) {
+                console.error('Failed to connect to Phantom wallet:', error);
+            }
+        }
+
+        // 绑定 Wallet 按钮点击事件
+        document.getElementById('wallet').addEventListener('click', connectPhantomWallet);
+    </script>
+
+</body>
+
+</html>

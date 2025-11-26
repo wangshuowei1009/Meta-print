@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mint NFT on dev net</title>
+</head>
+
+<style>
+    /* NFT 商品卡片样式 */
+    /* 调试用，给容器添加明显的边框 */
+</style>
+
+<body>
+    <h2>Connect to Phantom Wallet</h2>
+    <button id="connectButton">Connect Wallet</button>
+
+    <h2>Check Wallet Balance</h2>
+    <button id="balanceButton">Check Balance</button>
+
+    <button id="openPopup">按钮1</button>
+
+
+
+
+
+
+
+
+
+
+
+
+    <h2>Display Your NFTs</h2>
+    <button id="displayNftsButton">Display NFTs</button>
+
+    <div id="nftContainer"></div>
+
+
+
+
+
+
+
+
+    <h2>Listed NFTs on Auction House</h2>
+    <button id="displayListedNftsButton">Show Listed NFTs</button>
+    <div id="listedNftsContainer"></div>
+
+
+    <button id="testButton">TEST!!!</button>
+
+    <input type="text" id="signature" placeholder="Enter signature">
+    <button id="testButton2">TEST!!!</button>
+
+    <br>
+    <button id="createCollectionNft">createCollectionNFT</button>
+    <button id="displayCollectionNFT">displayCollectionNFT</button>
+
+
+    <br>
+    <input type="text" id="mintInput">
+    <button id="Verify">verify</button>
+
+    <br>
+    <br>
+    <br>
+    <input type="text" id="listingMint" placeholder="mint to find listing">
+    <input type="text" id="listingSeller" placeholder="seller to find listing">
+    <button id="displayListingDev">displayListingDev</button>
+
+    <br>
+    <br>
+    <input type="text" id="MintToList" placeholder="mint to list">
+    <button id="ListDev">ListDev</button>
+
+    <br>
+    <br>
+    <input type="text" id="RecieptToCancel" placeholder="receipt to cancel">
+    <button id="unListDev">unListDev</button>
+
+    <br>
+    <br>
+    <input type="text" id="RecieptToBuy" placeholder="receipt to buy">
+    <button id="buyDev">buyDev</button>
+
+    <br>
+    <button id="consoleLog">consoleLog</button>
+
+    <br>
+    <button id="displayAllListingDev">displayAllListingDev</button>
+
+    <br>
+    <button id="getActiveListingsDev">getActiveListingsDev</button>
+
+    <script src="dist/bundle.js"></script>
+</body>
+
+</html>
+
+<script>
+    document.getElementById("openPopup").addEventListener("click", function () {
+        // 使用 window.open 打开新窗口，注意设置合适的尺寸和属性
+        window.open("modal.html", "PopupWindow", "width=800,height=600,resizable=yes,scrollbars=yes");
+    });
+</script>

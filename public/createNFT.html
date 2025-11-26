@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Create NFT</title>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+    <meta name="author" content="Edward Mc Evoy 2019">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+</head>
+<style>
+    .container {
+        max-width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    #form-header {
+        margin-top: 5%;
+        text-align: center;
+    }
+
+    #form-tagline {
+        background: linear-gradient(135deg, rgba(0, 123, 255, 0.8), rgba(40, 167, 69, 0.8), rgba(255, 193, 7, 0.8));
+        /* 蓝-绿-黄三色渐变 */
+        border-top-left-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+        color: #ffffff;
+        padding: 4%;
+        text-align: left;
+    }
+
+    #form-tagline .fa {
+        margin-bottom: 15%;
+    }
+
+    #form-tagline h2 {
+        margin-bottom: 15%;
+    }
+
+    #form-content {
+        background: #f4f4f4;
+        border-top-right-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        margin-top: 0;
+        /* 去掉顶部外边距 */
+        padding: 3%;
+        /* 去掉内边距 */
+    }
+
+    .form-group {
+        margin-top: 5%;
+    }
+
+    .contact {
+        padding: 4%;
+        height: 400px;
+    }
+
+    .control-label {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    div .submit-button {
+        margin-top: 3%;
+        text-align: right;
+    }
+
+    button#submit {
+        white-space: normal;
+        width: auto;
+        background: #ff6d00;
+        color: #ffffff;
+        font-weight: 600;
+        width: 25%;
+    }
+
+    .custom-btn-p,
+    .custom-btn-s {
+        padding: 15px 30px;
+        font-size: 1.25rem;
+        border-radius: 8px;
+        border: none;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        width: 270px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    /* 按钮1 - custom-btn-p */
+    .custom-btn-p {
+        background: linear-gradient(135deg, #f4d03f, #2ecc71);
+    }
+
+    /* 按钮2 - custom-btn-s */
+    .custom-btn-s {
+        background: linear-gradient(135deg, #ff5f6d, #ffc371);
+    }
+
+    /* 悬停时的效果 - 按钮1 */
+    .custom-btn-p:hover {
+        animation: gradient-reverse-p 0.5s forwards;
+        color: black;
+        /* 悬停时文字变为黑色 */
+        box-shadow: 0 8px 15px rgba(0, 114, 255, 0.3);
+        transform: translateY(-3px);
+    }
+
+    /* 悬停时的效果 - 按钮2 */
+    .custom-btn-s:hover {
+        animation: gradient-reverse-s 0.5s forwards;
+        color: black;
+        /* 悬停时文字变为黑色 */
+        box-shadow: 0 8px 15px rgba(0, 114, 255, 0.3);
+        transform: translateY(-3px);
+    }
+
+    /* 点击时的效果 - 按钮1 */
+    .custom-btn-p:active {
+        background: linear-gradient(135deg, #27ae60, #f39c12);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        transform: translateY(1px);
+    }
+
+    /* 点击时的效果 - 按钮2 */
+    .custom-btn-s:active {
+        background: linear-gradient(135deg, #d84315, #e57373);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        transform: translateY(1px);
+    }
+
+    /* 渐变反转动画 - 按钮1 */
+    @keyframes gradient-reverse-p {
+        0% {
+            background: linear-gradient(135deg, #f4d03f, #2ecc71);
+            color: white;
+        }
+
+        100% {
+            background: linear-gradient(135deg, #2ecc71, #f4d03f);
+            color: black;
+        }
+    }
+
+    /* 渐变反转动画 - 按钮2 */
+    @keyframes gradient-reverse-s {
+        0% {
+            background: linear-gradient(135deg, #ff5f6d, #ffc371);
+            color: white;
+        }
+
+        100% {
+            background: linear-gradient(135deg, #ffc371, #ff5f6d);
+            color: black;
+        }
+    }
+
+
+    #loadingOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        /* 默认隐藏 */
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    .loader {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 240px;
+        /* 调大整体尺寸 */
+        height: 240px;
+        /* 调大整体尺寸 */
+        perspective: 780px;
+    }
+
+    .text {
+        font-size: 32px;
+        font-weight: 700;
+        color: #ffffff;
+        z-index: 10;
+        position: absolute;
+        text-align: center;
+        /* 居中显示 */
+        width: 100%;
+        /* 限定宽度，触发自动换行 */
+        white-space: normal;
+        /* 允许换行 */
+    }
+
+    .load-inner {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        border-radius: 50%;
+    }
+
+    .load-inner.load-one {
+        left: 0;
+        top: 0;
+        border-bottom: 6px solid rgba(255, 193, 7, 0.8);
+        animation: rotate1 1.15s linear infinite;
+    }
+
+    .load-inner.load-two {
+        right: 0;
+        top: 0;
+        border-right: 6px solid rgba(40, 167, 69, 0.8);
+        animation: rotate2 1.15s 0.1s linear infinite;
+    }
+
+    .load-inner.load-three {
+        right: 0;
+        bottom: 0;
+        border-top: 6px solid rgba(0, 123, 255, 0.8);
+        animation: rotate3 1.15s 0.15s linear infinite;
+    }
+
+    @keyframes rotate1 {
+        0% {
+            transform: rotateX(45deg) rotateY(-45deg) rotateZ(0deg);
+        }
+
+        100% {
+            transform: rotateX(45deg) rotateY(-45deg) rotateZ(360deg);
+        }
+    }
+
+    @keyframes rotate2 {
+        0% {
+            transform: rotateX(45deg) rotateY(45deg) rotateZ(0deg);
+        }
+
+        100% {
+            transform: rotateX(45deg) rotateY(45deg) rotateZ(360deg);
+        }
+    }
+
+    @keyframes rotate3 {
+        0% {
+            transform: rotateX(-60deg) rotateY(0deg) rotateZ(0deg);
+        }
+
+        100% {
+            transform: rotateX(-60deg) rotateY(0deg) rotateZ(360deg);
+        }
+    }
+</style>
+<!--<script>
+    $(document).ready(function () {
+        $("#survey-form").submit(function () {
+            alert("Thank You！");
+            document.getElementById("survey-form").reset();
+        });
+    });
+
+</script>
+-->
+
+<body>
+
+
+
+    <div id="loadingOverlay" style="display: none;">
+        <div class="loader">
+            <div class="load-inner load-one"></div>
+            <div class="load-inner load-two"></div>
+            <div class="load-inner load-three"></div>
+            <span class="text">Complete the operation in your wallet...</span>
+        </div>
+    </div>
+
+    <div class="container"> <!-- open container -->
+
+        <div class="row"> <!--  open row -->
+
+
+            <div id="form-tagline" class="col-md-4">
+                <div class="form-tagline" style="text-align: center;">
+                    <i class="fa fa-upload fa-5x" style="display: block; margin: 0 auto;"></i> <!-- 居中图标 -->
+                    <br>
+                    <br>
+                    <h2>Upload 3D Model and Create NFT</h2>
+                    <br>
+                    <p id="description" class="lead">"Transform your creativity into valuable assets—Upload, Mint, and
+                        Own your 3D NFTs today!"</p>
+
+                    <!-- 在这里插入 GIF -->
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+
+                    <img src="./3.gif" alt="GIF Image" style="width: 100%; margin-top: 20px;">
+                </div>
+            </div>
+
+
+
+
+            <div id="form-content" class="col-md-8">
+                <form id="survey-form" onsubmit="return false;"> <!-- open form -->
+
+                    <!-- NFT Name -->
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="name-label" class="control-label" for="name">NFT Name:</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-name"><i class="fa fa-cube"></i></span>
+                            </div>
+                            <input type="text" id="nftName" placeholder="Enter NFT name" class="form-control">
+                        </div>
+                    </div>
+
+                    <!-- NFT Description -->
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <label class="control-label" for="comment">NFT Description</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-comment"><i
+                                        class="fa fa-align-left"></i></span>
+                            </div>
+                            <textarea id="nftDescription" class="form-control" rows="5" id="comment"
+                                placeholder=" Enter NFT description"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- External URL -->
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="external-url-label" class="control-label" for="external-url">External URL
+                                (optional):</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-url"><i class="fa fa-link"></i></span>
+                            </div>
+                            <input id="externalUrl" type="text" class="form-control"
+                                placeholder="Please enter external URL" name="external-url">
+                        </div>
+                    </div>
+
+                    <!-- Dimensions: Width, Height, Depth -->
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="dimensionWidth-label" class="control-label" for="dimensionWidth">Width:</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-dimensionWidth"><i
+                                        class="fa fa-arrows-alt"></i></span>
+                            </div>
+                            <input id="dimensionWidth" type="number" class="form-control" placeholder="Enter width"
+                                name="dimensionWidth">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="dimensionHeight-label" class="control-label"
+                                for="dimensionHeight">Height:</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-dimensionHeight"><i
+                                        class="fa fa-arrows-alt"></i></span>
+                            </div>
+                            <input id="dimensionHeight" type="number" class="form-control" placeholder="Enter height"
+                                name="dimensionHeight">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="dimensionDepth-label" class="control-label" for="dimensionDepth">Depth:</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-dimensionDepth"><i
+                                        class="fa fa-arrows-alt"></i></span>
+                            </div>
+                            <input id="dimensionDepth" type="number" class="form-control" placeholder="Enter depth"
+                                name="dimensionDepth">
+                        </div>
+                    </div>
+
+                    <!-- Recommended Material -->
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="material-label" class="control-label" for="material">Recommended Material
+                                (optional):</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-material"><i
+                                        class="fa fa-flask"></i></span>
+                            </div>
+                            <input id="recommendedMaterial" type="text" class="form-control"
+                                placeholder="Enter recommended material" name="material">
+                        </div>
+                    </div>
+
+                    <!-- Recommended Layer Height -->
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="layer-height-label" class="control-label" for="layer-height">Recommended Layer
+                                Height (optional):</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-layer-height"><i
+                                        class="fa fa-layer-group"></i></span>
+                            </div>
+                            <input id="recommendedLayerHeight" type="text" class="form-control"
+                                placeholder="Enter recommended layer height" name="layer-height">
+                        </div>
+                    </div>
+
+                    <!-- Seller Fee Basis Points -->
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="sellerFee-label" class="control-label" for="sellerFee">Seller Fee Basis
+                                Points:</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-sellerFee"><i
+                                        class="fa fa-percent"></i></span>
+                            </div>
+                            <input id="sellerFee" type="number" class="form-control"
+                                placeholder="Enter fee basis points" name="sellerFee">
+                        </div>
+                    </div>
+
+                    <!-- Upload Preview Image -->
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="previewImageInput-label" class="control-label" for="previewImageInput">Upload
+                                Preview Image:</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-previewImageInput"><i
+                                        class="fa fa-image"></i></span>
+                            </div>
+                            <input id="previewImageInput" type="file" class="form-control" accept="image/*"
+                                name="previewImageInput">
+                        </div>
+                    </div>
+
+                    <!-- Upload Animation File -->
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="animationInput-label" class="control-label" for="animationInput">Upload Animation
+                                File (optional):</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-animationInput"><i
+                                        class="fa fa-file"></i></span>
+                            </div>
+                            <input id="animationInput" type="file" class="form-control" accept=".glb,.gltf"
+                                name="animationInput">
+                        </div>
+                    </div>
+
+                    <!-- Upload STL File -->
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="stlInput-label" class="control-label" for="stlInput">Upload STL File:</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-stlInput"><i
+                                        class="fa fa-cube"></i></span>
+                            </div>
+                            <input id="stlInput" type="file" accept=".stl">
+                        </div>
+                    </div>
+
+                    <!-- STL Description -->
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="stlDescription-label" class="control-label" for="stlDescription">STL Description
+                                (optional):</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-stlDescription"><i
+                                        class="fa fa-pencil-alt"></i></span>
+                            </div>
+                            <input id="stlDescription" type="text" class="form-control"
+                                placeholder="Enter STL file description" name="stlDescription">
+                        </div>
+                    </div>
+
+                    <!-- Upload OBJ File -->
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="objInput-label" class="control-label" for="objInput">Upload OBJ File:</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-objInput"><i
+                                        class="fa fa-cube"></i></span>
+                            </div>
+                            <input id="objInput" type="file" class="form-control" accept=".obj" name="objInput">
+                        </div>
+                    </div>
+
+                    <!-- OBJ Description -->
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="objDescription-label" class="control-label" for="objDescription">OBJ Description
+                                (optional):</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-objDescription"><i
+                                        class="fa fa-pencil-alt"></i></span>
+                            </div>
+                            <input id="objDescription" type="text" class="form-control"
+                                placeholder="Enter OBJ file description" name="objDescription">
+                        </div>
+                    </div>
+
+                    <!-- Upload 3MF File -->
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="threeMfInput-label" class="control-label" for="threeMfInput">Upload glb
+                                File:</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-threeMfInput"><i
+                                        class="fa fa-cube"></i></span>
+                            </div>
+                            <input id="3mfInput" type="file" class="form-control" accept=".glb" name="threeMfInput">
+                        </div>
+                    </div>
+
+                    <!-- 3MF Description -->
+                    <div class="row form-group">
+                        <div class="col-sm-4">
+                            <label id="threeMfDescription-label" class="control-label" for="threeMfDescription">3MF
+                                Description (optional):</label>
+                        </div>
+                        <div class="input-group col-sm-8">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-threeMfDescription"><i
+                                        class="fa fa-pencil-alt"></i></span>
+                            </div>
+                            <input id="threeMfDescription" type="text" class="form-control"
+                                placeholder="Enter 3MF file description" name="threeMfDescription">
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                    <!-- Submit Buttons -->
+                    <div class="form-group row">
+                        <div class="col-sm-12 d-flex justify-content-end">
+                            <button id="estimateButton" type="button" class="btn custom-btn-p me-3" aria-pressed="true"
+                                style="margin-right: auto;">Estimate Upload Cost</button>
+                            <button id="uploadAndCreateNftButton" type="button" class="btn custom-btn-s me-3"
+                                aria-pressed="true">Upload
+                                Files and Create
+                                NFT</button>
+                        </div>
+                    </div>
+
+
+
+                </form> <!-- close form -->
+                <br>
+
+
+
+
+            </div> <!-- close form content div -->
+        </div> <!-- close row -->
+    </div><!-- close container -->
+
+    <script src="dist/bundlejj.js"></script>
+    <script>console.log("motherfucker")</script>
+
+
+</body>
+
+</html>

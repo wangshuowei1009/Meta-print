@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>STL 模型预览</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 引入 Three.js 库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- 引入 STLLoader -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+    <!-- 引入 OrbitControls 控制器 -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <script>
+        // 创建场景、相机和渲染器
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // 添加环境光和定向光
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+
+        // 创建 OrbitControls 实现旋转、平移和缩放
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;  // 增加阻尼感
+        controls.dampingFactor = 0.05;
+
+        // 设置相机位置
+        camera.position.set(0, 0, 100);
+        controls.update();
+
+        // 使用 STLLoader 加载 STL 模型
+        const loader = new THREE.STLLoader();
+        // 将下面的链接替换为你的 STL 文件链接
+        const stlUrl = 'https://gateway.irys.xyz/IJop3fP24i5qtIIB5X9BTQlzHnnb9DeNchWC5q09hdI/ImageToStl.com_refined_model_31.stl';
+
+        loader.load(stlUrl, function (geometry) {
+            const material = new THREE.MeshPhongMaterial({ color: 0xaaaaaa });
+            const mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+
+            // 可选：自动调整相机位置以适应模型大小
+            const box = new THREE.Box3().setFromObject(mesh);
+            const size = box.getSize(new THREE.Vector3()).length();
+            const center = box.getCenter(new THREE.Vector3());
+            camera.near = size / 100;
+            camera.far = size * 100;
+            camera.updateProjectionMatrix();
+            camera.position.copy(center);
+            camera.position.z += size;
+            camera.lookAt(center);
+            controls.target.copy(center);
+        });
+
+        // 处理窗口大小变化
+        window.addEventListener('resize', function () {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // 动画循环
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+
+</html>
